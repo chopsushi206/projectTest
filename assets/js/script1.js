@@ -32,41 +32,56 @@ var buttonClickHandler = function () {
     .then(function (response) {
       if (response.ok) {
         response.json().then(function (data) {
-          console.log(data);
-          console.log(data.drinks.length);
           carouselContEl.innerHTML = '';
-          for (i = 0; i < data.drinks.length; i++) {
-            drinkArray.push(data.drinks[i].strDrink)
+          console.log(data.drinks.length);
+          console.log(data.drinks);
+          console.log(data);
+          if (data.drinks == "None Found") {
+            console.log('no results');
             const carouselCard = document.createElement('div');
             carouselCard.classList.add('carousel_card');
+            carouselCard.classList.add('carousel_card_visible');
             const alignmentCont = document.createElement('div');
             alignmentCont.classList.add('alignmentContainer');
-            const titleDisplay = document.createElement('h4');
-            titleDisplay.classList.add('drinktitle');
-            titleDisplay.innerHTML = data.drinks[i].strDrink;
-            const alcoholDisplay = document.createElement('img');
-            alcoholDisplay.setAttribute("src", data.drinks[i].strDrinkThumb);
-            alcoholDisplay.classList.add("drinkImage");
-            const modalBtn = document.createElement('button');
-            modalBtn.classList.add('modalBtn');
-            alignmentCont.appendChild(titleDisplay).appendChild(alcoholDisplay);
-            alignmentCont.appendChild(modalBtn);
+            const noResults = document.createElement('p');
+            noResults.innerHTML = "Your search returned no results. Please make another selection.";
+            alignmentCont.appendChild(noResults);
             carouselCard.appendChild(alignmentCont);
             carouselContEl.appendChild(carouselCard);
+          } else if (data.drinks !== "None Found") {
+            for (i = 0; i < data.drinks.length; i++) {
+              drinkArray.push(data.drinks[i].strDrink)
+              const carouselCard = document.createElement('div');
+              carouselCard.classList.add('carousel_card');
+              if (i == 0) {
+                carouselCard.classList.add('carousel_card_visible');
+              };
+              const alignmentCont = document.createElement('div');
+              alignmentCont.classList.add('alignmentContainer');
+              const titleDisplay = document.createElement('h4');
+              titleDisplay.classList.add('drinktitle');
+              titleDisplay.innerHTML = data.drinks[i].strDrink;
+              const alcoholDisplay = document.createElement('img');
+              alcoholDisplay.setAttribute("src", data.drinks[i].strDrinkThumb);
+              alcoholDisplay.classList.add("drinkImage");
+              const modalBtn = document.createElement('button');
+              modalBtn.classList.add('modalBtn');
+              titleDisplay.innerHTML = 'Click for Recipe';
+              alignmentCont.appendChild(titleDisplay).appendChild(alcoholDisplay);
+              alignmentCont.appendChild(modalBtn);
+              carouselCard.appendChild(alignmentCont);
+              carouselContEl.appendChild(carouselCard);
 
+            }
           }
-
         })
       }
     })
 }
-/*} else {
-    alert('Error: ' + response.statusText);
-  }
-}
-.catch(function (error) {
-  alert('Unable to connect to bartender');
-})*/
+
+
+
+
 
 
 /*  //YouTube function 92-110
@@ -88,7 +103,7 @@ var buttonClickHandler = function () {
        }
    });
  }
-
+ 
  var getRecipe = function (recipePick) { 
    console.log(recipePick); 
    
@@ -116,7 +131,7 @@ var buttonClickHandler = function () {
      alert('broken');
    });
    }
-
+ 
 };*/
 
 
