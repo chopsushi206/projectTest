@@ -1,13 +1,15 @@
-var modalBtn = document.querySelectorAll('#modalBtn');
+var modalBtn = document.querySelectorAll('#modalBtn');//.modalbtn
+
 var modal = document.querySelector('.modal');
 var mainPage = document.querySelector('main');
 var asidePage = document.querySelector('.ingredients');
 var header = document.querySelector('.title')
-console.log(modalBtn)
+
+console.log(modalBtn);
 
 for (var i = 0; i < modalBtn.length; i++){
-    console.log(i)
-    modalBtn[i].addEventListener('click', function() {
+    
+    modalBtn.addEventListener('click', function() {
         modal.style.display = 'block';
         mainPage.style.display = 'none';
         asidePage.style.display = 'none';

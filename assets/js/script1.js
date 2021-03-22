@@ -4,6 +4,8 @@ var recipeButtonEl = document.querySelector('#modalBtn');
 var carouselContEl = document.querySelector('#carousel_cards_container');
 var drinkArray = [];
 let alcoholPick, mixersPick;
+let cardPosition = 0;
+const cards = document.getElementsByClassName('carousel_card');
 
 function alcoholChoice() {
   let alcohol = document.getElementsByName('alcohol');
@@ -24,6 +26,7 @@ function mixersChoice() {
 }
 
 var buttonClickHandler = function () {
+  cardPosition = 0;
   alcoholChoice();
   mixersChoice();
 
@@ -64,11 +67,12 @@ var buttonClickHandler = function () {
               const alcoholDisplay = document.createElement('img');
               alcoholDisplay.setAttribute("src", data.drinks[i].strDrinkThumb);
               alcoholDisplay.classList.add("drinkImage");
-              const modalBtn = document.createElement('button');
-              modalBtn.classList.add('modalBtn');
-              titleDisplay.innerHTML = 'Click for Recipe';
+              const modalButton = document.createElement('button');
+              modalButton.classList.add('modalbtn');
+              modalButton.setAttribute("id", "modalBtn"); 
+              modalButton.innerHTML = 'Click for Recipe';
               alignmentCont.appendChild(titleDisplay).appendChild(alcoholDisplay);
-              alignmentCont.appendChild(modalBtn);
+              alignmentCont.appendChild(modalButton);
               carouselCard.appendChild(alignmentCont);
               carouselContEl.appendChild(carouselCard);
 
@@ -79,8 +83,42 @@ var buttonClickHandler = function () {
     })
 }
 
+//  BEGIN CAROUSEL SCRIPT
 
+document.getElementById('carouselBtn_next').addEventListener('click', function () {
+  moveToNextCard();
+});
+document.getElementById('carouselBtn_prev').addEventListener('click', function () {
+  moveToPrevCard();
+});
 
+function updateCardPosition () {
+for (let card of cards) {
+  card.classList.remove('carousel_card_visible');
+  card.classList.remove('carousel_card_hidden');
+}
+
+cards[cardPosition].classList.add('carousel_card_visible');
+}
+function moveToNextCard () {
+  if (cardPosition == cards.length -1) {
+      cardPosition = 0;
+  } else {
+      cardPosition++;
+  }
+  updateCardPosition();
+};
+
+function moveToPrevCard() {
+  if (cardPosition == 0) {
+      cardPosition = cards.length -1;
+  } else {
+      cardPosition--;
+  }
+  updateCardPosition();
+};
+
+// END CAROUSEL SCRIPT
 
 
 
@@ -102,7 +140,7 @@ var buttonClickHandler = function () {
          alert('Error: ' + response.statusText);
        }
    });
- }
+ }*/
  
  var getRecipe = function (recipePick) { 
    console.log(recipePick); 
@@ -132,12 +170,11 @@ var buttonClickHandler = function () {
    });
    }
  
-};*/
+};
 
 
 
 
 
 alcoholButtonEl.addEventListener('click', buttonClickHandler);
-  //mixerButtonEl.addEventListener('click', buttonClickHandler2);
  // recipeButtonEl.addEventListener('click', buttonClickHandler3);
